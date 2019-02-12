@@ -33,7 +33,7 @@
   padding-top: 50vh;
 }
 .loading span {
-  animation: Blinking infinite .5s linear;
+  animation: Blinking infinite 1s linear;
 }
 
 @keyframes Blinking {

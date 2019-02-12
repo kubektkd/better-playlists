@@ -10,9 +10,11 @@ class TimeCount extends Component {
         totalTime += el.duration;
       });
     });
+    let totalHours = Math.floor(totalTime/360)
+
     return (
       <div>
-        <h3>{Math.floor(totalTime/360)} <span>hours</span></h3>
+        <h3>{totalHours} <span>{totalHours < 2 ? 'hour' : 'hours'}</span></h3>
       </div>
     );
   }

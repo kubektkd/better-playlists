@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
+import './App.css';
 import Header from './Header.js';
 import PlaylistCount from './PlaylistCount.js';
 import TimeCount from './TimeCount.js';
-import './App.css';
 import Filter from './Filter.js';
 import Playlist from './Playlist.js';
+import {debounce} from 'lodash';
 
 export const fakeServerData = {
   user: {
     name: 'Jim',
     playlists: [
       {
+        id: 1,
         name: 'My favoutrites',
+        image: 'http://placeimg.com/300/300/animals',
         songs: [
           {
             name: 'Californication',
@@ -28,7 +31,9 @@ export const fakeServerData = {
         ],
       },
       {
+        id: 2,
         name: 'Last discovers',
+        image: 'http://placeimg.com/300/300/nature',
         songs: [
           {
             name: 'Unsteady',
@@ -45,7 +50,9 @@ export const fakeServerData = {
         ],
       },
       {
+        id: 3,
         name: 'Waiting room',
+        image: 'http://placeimg.com/300/300/people',
         songs: [
           {
             name: 'Down Under',
@@ -62,7 +69,9 @@ export const fakeServerData = {
         ],
       },
       {
+        id: 4,
         name: 'Recommended',
+        image: 'http://placeimg.com/300/300/tech',
         songs: [
           {
             name: 'Simple Song',
@@ -85,16 +94,23 @@ export const fakeServerData = {
 class App extends Component {
   constructor() {
     super();
-    this.state = {serverData: {}};
+    this.state = {
+      serverData: {},
+      filterString: ''
+    };
   }
   
   componentDidMount() {
     setTimeout(() => {
       this.setState({serverData: fakeServerData});
-    }, 1000);
+    }, 1500);
   }
 
   render() {
+    let playlistsToRender = this.state.serverData.user && this.state.serverData.user.playlists.filter(playlist =>
+      playlist.name.toLowerCase().includes(this.state.filterString.toLowerCase())
+    )
+
     return (
       <div className="App">
         {this.state.serverData.user ?
@@ -102,15 +118,15 @@ class App extends Component {
           <Header username={this.state.serverData.user.name} />
 
           <div className="aggregate">
-            <PlaylistCount playlists={this.state.serverData.user && this.state.serverData.user.playlists} />
-            <TimeCount playlists={this.state.serverData.user && this.state.serverData.user.playlists} />
+            <PlaylistCount playlists={playlistsToRender} />
+            <TimeCount playlists={playlistsToRender} />
           </div>
 
-          <Filter />
+          <Filter onTextChange={debounce(text => this.setState({filterString: text}), 500)} />
 
           <div className="playlists">
-            {this.state.serverData.user.playlists.map(playlist => 
-              <Playlist name={playlist.name} songs={playlist.songs}/>
+            {playlistsToRender.map(playlist => 
+              <Playlist key={playlist.id} playlist={playlist}/>
             )}
           </div>
         </div> : <div className="loading">Loading <span>...</span></div>}

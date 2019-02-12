@@ -8,7 +8,11 @@ class Filter extends Component {
     return (
       <div className="filter">
         <img src="https://static.thenounproject.com/png/101791-200.png" alt="search" style={searchStyle} />
-        <input type="text" style={inputStyle} placeholder="Search..." />
+        <input type="text"
+          style={inputStyle} 
+          placeholder="Search playlist ..." 
+          onChange={event => this.props.onTextChange(event.target.value)}
+        />
       </div>
     );
   }
