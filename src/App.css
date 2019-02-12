@@ -27,6 +27,27 @@
   }
 }
 
+.loading {
+  font-size: calc(10px + 2vmin);
+  align-self: center;
+  padding-top: 50vh;
+}
+.loading span {
+  animation: Blinking infinite .5s linear;
+}
+
+@keyframes Blinking {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .header {
   justify-self: stretch;
   margin-top: 20px;
