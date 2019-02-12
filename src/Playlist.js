@@ -10,11 +10,11 @@ class Playlist extends Component {
     return (
       <div className="playlist">
         <img src="http://placeimg.com/300/300/nature" alt="" style={imageStyle} />
-        <h4 style={headerStyle}>Playlist's name</h4>
+        <h4 style={headerStyle}>{this.props.name}</h4>
         <ul style={listStyle}>
-          <li>Song #1</li>
-          <li>Song #2</li>
-          <li>Song #3</li>
+          {this.props.songs.map(song =>
+            <li>{song.name}</li>
+          )}
         </ul>
       </div>
     );
